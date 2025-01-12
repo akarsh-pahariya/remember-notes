@@ -42,7 +42,7 @@ const Login = () => {
   };
 
   return (
-    <div className="flex-grow flex items-center justify-center">
+    <div className="flex-grow flex flex-col items-center justify-center">
       <div className="bg-gray-800 shadow-lg rounded-lg p-6 max-w-sm w-full">
         <h1 className="text-2xl font-bold text-center text-white mb-4">
           Login
@@ -102,6 +102,10 @@ const Login = () => {
           </button>
         </div>
       </div>
+      <p className="mt-4 text-center text-red-500 text-sm">
+        *You might not receive a welcome email because I didn`t find any free
+        mail service.
+      </p>
     </div>
   );
 };

@@ -22,7 +22,7 @@ const ForgotPassword = () => {
   };
 
   return (
-    <div className="flex-grow flex items-center justify-center">
+    <div className="flex-grow flex flex-col items-center justify-center">
       <div className="bg-gray-800 shadow-lg rounded-lg p-6 max-w-sm w-full">
         <h1 className="text-2xl font-bold text-center text-white mb-4">
           Forgot Password
@@ -50,6 +50,10 @@ const ForgotPassword = () => {
           </div>
         </form>
       </div>
+      <p className="mt-4 text-center text-red-500 text-sm">
+        *I am using Mailtrap as the email service, so you will not receive a
+        password change email.
+      </p>
     </div>
   );
 };
