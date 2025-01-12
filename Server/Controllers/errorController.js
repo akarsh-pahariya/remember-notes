@@ -30,7 +30,6 @@ const globalErrorHandler = (err, req, res, next) => {
   if (err.code === 11000) err = handleDuplicateValues(err, res);
   if (err.name === 'ValidationError') err = handleValidationError(err, res);
 
-  console.log(err);
   sendResponse(err, res);
 };
 
