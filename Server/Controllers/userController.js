@@ -47,7 +47,7 @@ const createUser = async (req, res, next) => {
   try {
     const newUser = await User.create(req.body);
 
-    const url = `http://localhost:5173/user`;
+    const url = `${process.env.FRONTEND_URL}/user`;
     await new Email(newUser, url).sendWelcome();
 
     const token = createToken(newUser._id);
