@@ -11,6 +11,7 @@ const SortBy = () => {
       >
         <option value="latest">Newest First</option>
         <option value="oldest">Oldest First</option>
+        <option value="importance">Importance</option>
       </select>
     </div>
   );

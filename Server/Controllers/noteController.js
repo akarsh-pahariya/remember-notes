@@ -5,7 +5,9 @@ const { globalErrorHandler } = require('./errorController');
 
 const getNote = async (req, res) => {
   try {
-    let notesQuery = Note.find({ user: req.user._id }).select('-__v -user');
+    let notesQuery = Note.find({ user: req.user._id })
+      .select('-__v -user')
+      .sort({ createdAt: -1 });
     const notes = await notesQuery;
 
     res.status(201).json({

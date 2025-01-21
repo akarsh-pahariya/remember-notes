@@ -42,6 +42,9 @@ const Notes = (noteData) => {
         </p>
         <div className="text-xs text-gray-400 space-y-1">
           <p>
+            <i>
+              <b>Importance: </b>
+            </i>
             <span className="font-semibold">{noteData.data.importance}</span>
           </p>
           <p>
