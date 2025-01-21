@@ -7,7 +7,7 @@ const getNote = async (req, res) => {
   try {
     let notesQuery = Note.find({ user: req.user._id })
       .select('-__v -user')
-      .sort({ createdAt: -1 });
+      .sort(req.query.sort);
     const notes = await notesQuery;
 
     res.status(201).json({

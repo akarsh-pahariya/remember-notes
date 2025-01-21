@@ -9,6 +9,7 @@ import { formatDate } from '../services/utils';
 
 const useFetchNotes = () => {
   let userInfo = useSelector((store) => store.user.infoAvailable);
+  const sort = useSelector((store) => store.filters.sort);
   const [notes, setNotes] = useState();
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -16,7 +17,7 @@ const useFetchNotes = () => {
 
   const fetchData = async () => {
     try {
-      const res = await axios.get(`${backendBaseURL}/note`, {
+      const res = await axios.get(`${backendBaseURL}/note?sort=${sort}`, {
         withCredentials: true,
         headers: {
           userInfoRequired: userInfo.toString(),
