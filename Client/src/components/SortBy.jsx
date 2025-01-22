@@ -1,8 +1,18 @@
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { updateSort } from '../store/slices/filtersSlice';
+import useFilterNotes from '../features/useFilterNotes';
+import { useEffect, useRef } from 'react';
 
 const SortBy = () => {
+  const sort = useSelector((store) => store.filters.sort);
+  const fetchFilteredNotes = useFilterNotes();
   const dispatch = useDispatch();
+  const value = useRef(0);
+
+  useEffect(() => {
+    if (value.current > 1) fetchFilteredNotes();
+    value.current = 2;
+  }, [sort]);
 
   return (
     <div className="flex items-center space-x-2">
@@ -12,7 +22,9 @@ const SortBy = () => {
       <select
         id="sortDropdown"
         className="bg-gray-700 text-white p-2 rounded focus:outline-none"
-        onChange={(e) => dispatch(updateSort(e.target.value))}
+        onChange={(e) => {
+          dispatch(updateSort(e.target.value));
+        }}
       >
         <option value="-createdAt">Newest First</option>
         <option value="createdAt">Oldest First</option>
