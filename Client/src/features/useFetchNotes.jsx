@@ -2,27 +2,34 @@ import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { backendBaseURL, backendURL } from '../services/constants';
 import { addUserData } from '../store/slices/userSlice';
-import { addNotes } from '../store/slices/notesSlice';
-import { useNavigate } from 'react-router-dom';
+import { addNotes, addTotalNotes } from '../store/slices/notesSlice';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { formatDate } from '../services/utils';
 
 const useFetchNotes = () => {
   let userInfo = useSelector((store) => store.user.infoAvailable);
   const sort = useSelector((store) => store.filters.sort);
+  const [searchParams] = useSearchParams();
   const [notes, setNotes] = useState();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   userInfo = !userInfo;
 
   const fetchData = async () => {
+    const page = parseInt(searchParams.get('page') || 1);
+    console.log('useFetchNotes');
+
     try {
-      const res = await axios.get(`${backendBaseURL}/note?sort=${sort}`, {
-        withCredentials: true,
-        headers: {
-          userInfoRequired: userInfo.toString(),
-        },
-      });
+      const res = await axios.get(
+        `${backendBaseURL}/note?sort=${sort}&page=${page}`,
+        {
+          withCredentials: true,
+          headers: {
+            userInfoRequired: userInfo.toString(),
+          },
+        }
+      );
       if (res.data.user !== 0) {
         res.data.user.photoAddress = res.data.user.photo;
         const img = await axios.get(`${backendURL}/${res.data.user.photo}`, {
@@ -44,6 +51,7 @@ const useFetchNotes = () => {
       }
 
       dispatch(addNotes(res.data.data.note));
+      dispatch(addTotalNotes(res.data.data.totalNotes));
       setNotes(res.data.data.note);
     } catch (error) {
       window.alert(

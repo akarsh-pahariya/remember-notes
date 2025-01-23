@@ -5,9 +5,15 @@ const { globalErrorHandler } = require('./errorController');
 
 const getNote = async (req, res) => {
   try {
+    const max = 5;
+    const skipNotes = (req.query.page - 1) * max;
+
+    const totalNotes = await Note.countDocuments({ user: req.user._id });
     let notesQuery = Note.find({ user: req.user._id })
       .select('-__v -user')
-      .sort(req.query.sort);
+      .sort(req.query.sort)
+      .limit(max)
+      .skip(skipNotes);
     const notes = await notesQuery;
 
     res.status(201).json({
@@ -16,6 +22,7 @@ const getNote = async (req, res) => {
       user: res.locals.user || 0,
       data: {
         note: notes,
+        totalNotes,
       },
     });
   } catch (err) {

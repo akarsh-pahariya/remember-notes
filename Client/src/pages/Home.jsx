@@ -3,17 +3,19 @@ import CreateNote from '../components/CreateNote';
 import useFetchNotes from '../features/useFetchNotes';
 import { useSelector } from 'react-redux';
 import SortBy from '../components/SortBy';
+import PaginationControls from '../components/PaginationControls';
 
 const Home = () => {
   const { fetchData } = useFetchNotes();
   const notes = useSelector((store) => store.notes.notes);
+  const totalNotes = useSelector((store) => store.notes.totalNotes);
 
   return (
     <div className="h-[609px] flex bg-black">
-      <div className="w-1/2 bg-gray-800 shadow-md p-6">
-        <div className="flex items-center justify-between mb-4">
+      <div className="w-1/2 bg-gray-800 shadow-md py-10 px-6">
+        <div className="flex items-center justify-between mb-5 mt-[-12px]">
           <h2 className="text-2xl font-semibold text-white">
-            Your Notes: {notes?.length}
+            Your Notes: {totalNotes}
           </h2>
           <SortBy />
         </div>
@@ -22,6 +24,7 @@ const Home = () => {
             <Notes key={note._id} data={note} fetchData={fetchData} />
           ))}
         </div>
+        <PaginationControls totalNotes={totalNotes} />
       </div>
       <CreateNote fetchNotes={fetchData} />
     </div>

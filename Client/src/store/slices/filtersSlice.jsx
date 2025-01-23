@@ -5,13 +5,17 @@ const filtersSlice = createSlice({
   initialState: {
     filters: [],
     sort: '-createdAt',
+    page: 1,
   },
   reducers: {
     updateSort: (state, action) => {
       state.sort = action.payload;
     },
+    updatePage: (state, action) => {
+      state.page = action.payload;
+    },
   },
 });
 
-export const { updateSort } = filtersSlice.actions;
+export const { updateSort, updatePage } = filtersSlice.actions;
 export default filtersSlice.reducer;

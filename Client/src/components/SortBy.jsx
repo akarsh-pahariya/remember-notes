@@ -12,7 +12,7 @@ const SortBy = () => {
   useEffect(() => {
     if (value.current > 1) fetchFilteredNotes();
     value.current = 2;
-  }, [sort]);
+  }, [sort, fetchFilteredNotes]);
 
   return (
     <div className="flex items-center space-x-2">
