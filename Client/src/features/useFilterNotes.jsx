@@ -11,9 +11,7 @@ const useFilterNotes = () => {
   const [searchParams] = useSearchParams();
 
   const fetchFilteredData = useCallback(async () => {
-    console.log('useFilterNotes');
     const page = parseInt(searchParams.get('page'));
-    if (!page) return;
 
     try {
       const url = `${backendBaseURL}/note?sort=${sort}&page=${page}`;

@@ -29,6 +29,7 @@ const SortBy = () => {
         <option value="-createdAt">Newest First</option>
         <option value="createdAt">Oldest First</option>
         <option value="-importance">Importance</option>
+        <option value="-updatedAt">Latest Updated</option>
       </select>
     </div>
   );

@@ -18,7 +18,6 @@ const useFetchNotes = () => {
 
   const fetchData = async () => {
     const page = parseInt(searchParams.get('page') || 1);
-    console.log('useFetchNotes');
 
     try {
       const res = await axios.get(
