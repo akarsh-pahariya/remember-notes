@@ -1,4 +1,3 @@
-const { query } = require('express');
 const Note = require('../Models/noteModel');
 const AppError = require('../Utils/appError');
 const { globalErrorHandler } = require('./errorController');
