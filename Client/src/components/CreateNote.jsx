@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { removeSelectedNote } from '../store/slices/selectedNoteSlice';
 import axios from 'axios';
 import { backendBaseURL } from '../services/constants';
+import { showErrorToast, showSuccessToast } from '../services/toastServices';
+import { setIsLoading } from '../store/slices/loadingSlice';
 
 const CreateNote = ({ fetchNotes }) => {
   const [title, setTitle] = useState('');
@@ -32,11 +34,12 @@ const CreateNote = ({ fetchNotes }) => {
         { withCredentials: true }
       );
       if (res.data.status === 'Success')
-        window.alert('Note has been added sucessfully !!');
+        showSuccessToast('Note has been added sucessfully !!');
       dispatch(removeSelectedNote());
       fetchNotes();
+      dispatch(setIsLoading(false));
     } catch (error) {
-      window.alert(error.response.data.message);
+      showErrorToast(error.response.data.message);
       console.log(error);
     }
   };
@@ -49,17 +52,19 @@ const CreateNote = ({ fetchNotes }) => {
         { withCredentials: true }
       );
       if (res.data.status === 'Success')
-        window.alert('Note has been updated sucessfully !!');
+        showSuccessToast('Note has been updated sucessfully !!');
       dispatch(removeSelectedNote());
       fetchNotes();
+      dispatch(setIsLoading(false));
     } catch (error) {
-      window.alert(error.response.data.message);
+      showErrorToast(error.response.data.message);
       console.log(error);
     }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    dispatch(setIsLoading(true));
     if (updateNote === true) updateExistingNote();
     else createNote();
   };

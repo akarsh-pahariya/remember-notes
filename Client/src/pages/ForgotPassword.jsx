@@ -2,6 +2,7 @@ import { useRef } from 'react';
 import axios from 'axios';
 import { backendBaseURL } from '../services/constants';
 import useFetchUser from '../features/useFetchUser';
+import { showErrorToast, showSuccessToast } from '../services/toastServices';
 
 const ForgotPassword = () => {
   const email = useRef(null);
@@ -14,10 +15,10 @@ const ForgotPassword = () => {
       const res = await axios.post(`${backendBaseURL}/user/forgotPassword`, {
         email: email.current.value,
       });
-      window.alert(res.data.message);
+      showSuccessToast(res.data.message);
     } catch (error) {
       window.alert(error.response.data.message);
-      console.log(error);
+      showErrorToast(error);
     }
   };
 

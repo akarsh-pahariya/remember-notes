@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import useFilterNotes from '../features/useFilterNotes';
+import { showErrorToast } from '../services/toastServices';
 
 const PaginationControls = ({ totalNotes }) => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -12,7 +13,7 @@ const PaginationControls = ({ totalNotes }) => {
   useEffect(() => {
     if ((page > totalPages || page < 1) && value > 0) {
       console.log(page);
-      window.alert('Please insert a valid page');
+      showErrorToast('Please insert a valid page');
       setSearchParams({ page: '1' });
       return;
     } else if (value > 0) {

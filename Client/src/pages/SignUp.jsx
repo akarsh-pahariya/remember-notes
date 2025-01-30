@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { addUserData } from '../store/slices/userSlice';
 import { backendBaseURL, backendURL } from '../services/constants';
 import useFetchUser from '../features/useFetchUser';
+import { showErrorToast } from '../services/toastServices';
 
 const SignUp = () => {
   const name = useRef(null);
@@ -43,7 +44,7 @@ const SignUp = () => {
         navigate('/');
       }
     } catch (error) {
-      window.alert(error.response.data.message);
+      showErrorToast(error.response.data.message);
     }
   };
 

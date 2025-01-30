@@ -7,6 +7,7 @@ import {
 } from '../store/slices/selectedNoteSlice';
 import axios from 'axios';
 import { backendBaseURL } from '../services/constants';
+import { showErrorToast, showSuccessToast } from '../services/toastServices';
 
 const Notes = (noteData) => {
   const dispatch = useDispatch();
@@ -17,16 +18,14 @@ const Notes = (noteData) => {
 
   const deleteNote = async () => {
     try {
-      const res = await axios.delete(
-        `${backendBaseURL}/note/${noteData.data._id}`,
-        { withCredentials: true }
-      );
-      if (res.data.data.status === 'Success');
-      window.alert('Note has been deleted successfully');
+      await axios.delete(`${backendBaseURL}/note/${noteData.data._id}`, {
+        withCredentials: true,
+      });
+      showSuccessToast('Note has been deleted successfully !!');
       dispatch(removeSelectedNote());
       noteData.fetchData();
     } catch (error) {
-      window.alert('Note Deletion has failed, Please try again !!');
+      showErrorToast('Note Deletion has failed, Please try again !!');
       console.log(error);
     }
   };

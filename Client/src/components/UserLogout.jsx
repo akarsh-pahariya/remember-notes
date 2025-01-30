@@ -5,6 +5,7 @@ import { clearNotes } from '../store/slices/notesSlice';
 import { removeSelectedNote } from '../store/slices/selectedNoteSlice';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { showErrorToast, showSuccessToast } from '../services/toastServices';
 
 const UserLogout = () => {
   const dispatch = useDispatch();
@@ -15,13 +16,13 @@ const UserLogout = () => {
       const res = await axios.get(`${backendBaseURL}/user/logout`, {
         withCredentials: true,
       });
-      window.alert(res.data.message);
+      showSuccessToast(res.data.message);
       dispatch(removeUserData());
       dispatch(clearNotes());
       dispatch(removeSelectedNote());
       navigate('/login');
     } catch (err) {
-      window.alert('Logout failed, Please try again');
+      showErrorToast('Logout failed, Please try again');
       console.log(err);
     }
   };

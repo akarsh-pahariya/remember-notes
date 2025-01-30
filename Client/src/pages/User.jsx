@@ -10,6 +10,7 @@ import useUserInfo from '../features/useUserInfo';
 import UsernameInput from '../components/UsernameInput';
 import EmailInput from '../components/EmailInput';
 import UserLogout from '../components/UserLogout';
+import { showErrorToast, showSuccessToast } from '../services/toastServices';
 
 const User = () => {
   const userData = useSelector((store) => store.user.userData);
@@ -98,11 +99,11 @@ const User = () => {
       res.data.user.photoUrl = imageUrl;
       delete res.data.user.photo;
       dispatch(addUserData(res.data.user));
-      window.alert(
+      showSuccessToast(
         'User info updated successfully !! Reload the page to see the changes into your profile'
       );
     } catch (error) {
-      window.alert(error.response?.data?.message || 'An error occurred');
+      showErrorToast(error.response?.data?.message || 'An error occurred');
       setHookVariables();
       console.log(error);
     }

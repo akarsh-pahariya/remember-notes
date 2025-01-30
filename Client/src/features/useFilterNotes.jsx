@@ -4,6 +4,7 @@ import axios from 'axios';
 import { addNotes } from '../store/slices/notesSlice';
 import { useSearchParams } from 'react-router-dom';
 import { useCallback } from 'react';
+import { showErrorToast } from '../services/toastServices';
 
 const useFilterNotes = () => {
   const sort = useSelector((store) => store.filters.sort);
@@ -23,7 +24,7 @@ const useFilterNotes = () => {
       });
       dispatch(addNotes(res.data.data.note));
     } catch (error) {
-      window.alert('Unable to fetch the desired results from the backend');
+      showErrorToast('Unable to fetch the desired results from the backend');
       console.log(error);
     }
   }, [sort, searchParams, dispatch]);

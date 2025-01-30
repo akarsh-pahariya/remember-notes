@@ -5,7 +5,8 @@ import { useNavigate } from 'react-router-dom';
 import { addUserData } from '../store/slices/userSlice';
 import { backendBaseURL, backendURL } from '../services/constants';
 import useFetchUser from '../features/useFetchUser';
-
+import { showErrorToast } from '../services/toastServices';
+import { setIsLoading } from '../store/slices/loadingSlice';
 const Login = () => {
   const email = useRef(null);
   const password = useRef(null);
@@ -14,6 +15,7 @@ const Login = () => {
   useFetchUser();
 
   const handleClick = async () => {
+    dispatch(setIsLoading(true));
     const url = `${backendBaseURL}/user/login`;
     try {
       const res = await axios.post(
@@ -33,10 +35,12 @@ const Login = () => {
         res.data.user.photoUrl = imageUrl;
         delete res.data.user.photo;
         dispatch(addUserData(res.data.user));
+        dispatch(setIsLoading(false));
+        console.log('I am here');
         navigate('/');
       }
     } catch (error) {
-      window.alert(error.response.data.message);
+      showErrorToast(error.response.data.message);
       console.log(error);
     }
   };

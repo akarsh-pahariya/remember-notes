@@ -3,6 +3,7 @@ import { useRef } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { backendBaseURL } from '../services/constants';
 import useFetchUser from '../features/useFetchUser';
+import { showErrorToast, showSuccessToast } from '../services/toastServices';
 
 const ResetPassword = () => {
   const navigate = useNavigate();
@@ -21,10 +22,10 @@ const ResetPassword = () => {
         passwordResetToken: params.resetToken,
       });
 
-      window.alert(res.data.message);
+      showSuccessToast(res.data.message);
       navigate('/login');
     } catch (error) {
-      window.alert(error.response.data.message);
+      showErrorToast(error.response.data.message);
       console.log(error);
     }
   };
